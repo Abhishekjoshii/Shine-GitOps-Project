@@ -1,0 +1,133 @@
+
++-------------+
+|  Developer  |
++-------------+
+|
+| Git Push
+v
++----------------------+
+|        GitHub        |
+| Maven Web Application|
++----------------------+
+|
+| Webhook / SCM Polling
+v
++------------------------------------------------+
+
+| Jenkins CI/CD Server                               |
+| -------------------------------------------------- |
+| Stage 1 : Source Code Checkout                     |
+| Stage 2 : SonarQube Analysis                       |
+| Stage 3 : Quality Gate Validation                  |
+| Stage 4 : Maven Build                              |
+| Stage 5 : WAR Artifact Generation                  |
+| Stage 6 : Deployment Trigger                       |
+| +------------------------------------------------+ |
+
+```
+   |
+   | Source Code Analysis
+   v
+```
+
++----------------------+
+
+| SonarQube Server         |
+| ------------------------ |
+| Bugs Detection           |
+| Vulnerability Scan       |
+| Code Smell Analysis      |
+| Quality Gate Check       |
+| +----------------------+ |
+
+```
+   |
+   | PASS
+   v
+```
+
++----------------------+
+| WAR Artifact Created |
++----------------------+
+|
+| Deployment Trigger
+v
++----------------------+
+
+| Ansible Server           |
+| ------------------------ |
+| Configuration Mgmt       |
+| Deployment Control       |
+| Service Automation       |
+| +----------------------+ |
+
+```
+   |
+   | SSH Connection
+   v
+```
+
++----------------------+
+
+| Tomcat Server            |
+| ------------------------ |
+| Stop Tomcat Service      |
+| Deploy WAR File          |
+| Start Tomcat Service     |
+| Validate Application     |
+| +----------------------+ |
+
+```
+   |
+   v
+```
+
++----------------------+
+|     End Users        |
+|     Web Browser      |
++----------------------+
+
+PIPELINE FLOW
+
+Developer Commit
+|
+v
+GitHub Repository
+|
+v
+Jenkins Pipeline Trigger
+|
+v
+Checkout Source Code
+|
+v
+SonarQube Analysis
+|
+v
+Quality Gate Validation
+|
++-------------------+
+| PASS              | FAIL
+v                   v
+Maven Build         Pipeline Stops
+|
+v
+WAR Artifact
+|
+v
+Ansible Deployment
+|
+v
+Stop Tomcat
+|
+v
+Deploy WAR
+|
+v
+Start Tomcat
+|
+v
+Application Validation
+|
+v
+Deployment Success
